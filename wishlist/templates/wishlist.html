@@ -5,13 +5,22 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="container">
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <span class="navbar-brand">Wishlist: {{nama}}</span>
+      <span class="d-flex">
+        <button class="btn btn-outline-danger"><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+      </span>
+    </div>
+  </nav>
+
+<!-- <div class="container">
     <h5>Nama: </h5>
     <p>{{nama}}</p>
-</div>
+</div> -->
 
 <div class="container">
-    <table class="table table-hover">
+    <table class="table table-hover my-4">
         <tr>
         <th>Nama Barang</th>
         <th>Harga Barang</th>
@@ -29,8 +38,8 @@
 </div>
 
 <div class="container">
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    <button class="btn btn-outline-danger"><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+    <h6>Sesi terakhir login: {{ last_login }}</h6>
+    <!-- <button class="btn btn-outline-danger"><a href="{% url 'wishlist:logout' %}">Logout</a></button> -->
 </div>
 
 {% endblock content %}
