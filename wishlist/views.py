@@ -17,6 +17,8 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from wishlist.forms import BarangWishlistForm
+
 # Create your views here.
 @login_required(login_url='/wishlist/login/')
 def show_wishlist(request):
@@ -93,3 +95,24 @@ def logout_user(request):
 
 def show_wishlist_ajax(request):
     return render(request, "wishlist_ajax.html")
+
+def wishlist_form(request):
+    form = BarangWishlistForm()
+    if request.method == "POST" and request.is_ajax():
+        form = BarangWishlistForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+
+            data = form.cleaned_data
+            nama_barang = data['nama_barang']
+            harga_barang = data['harga_barang']
+            deskripsi = data['deskripsi']
+
+
+            # Simpan objek dari model Task ke database
+            barangWishList = BarangWishlist(nama_barang = nama_barang, harga_barang = harga_barang, deskripsi=deskripsi )
+            barangWishList.save()
+            
+            return redirect('wishlist:show_wishlist_ajax')
+
+    return render(request, "wishlist_ajax.html", {"form": form})
