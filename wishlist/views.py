@@ -94,7 +94,11 @@ def logout_user(request):
     return response
 
 def show_wishlist_ajax(request):
-    return render(request, "wishlist_ajax.html")
+    form = BarangWishlistForm()
+    context = {
+        'form': form
+    }
+    return render(request, "wishlist_ajax.html", context)
 
 def wishlist_form(request):
     form = BarangWishlistForm()
@@ -112,7 +116,7 @@ def wishlist_form(request):
             # Simpan objek dari model Task ke database
             barangWishList = BarangWishlist(nama_barang = nama_barang, harga_barang = harga_barang, deskripsi=deskripsi )
             barangWishList.save()
-            
+
             return redirect('wishlist:show_wishlist_ajax')
 
     return render(request, "wishlist_ajax.html", {"form": form})
